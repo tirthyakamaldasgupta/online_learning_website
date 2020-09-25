@@ -1,0 +1,57 @@
+{% extends 'main/overall_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+{% block title %}REGISTER{% endblock %}
+{% block body %}
+    <br>
+    <div>
+        <div class="row">
+            <div class="col-auto col-lg-6 col-xl-6 offset-lg-0 offset-xl-3 text-left text-dark">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col">
+                            {% render_field userregistrationform.first_name class="form-control" placeholder="First Name" %}
+                        </div>
+                        <div class="col">
+                            {% render_field userregistrationform.last_name class="form-control" placeholder="Last Name" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            {% render_field userregistrationform.email class="form-control" placeholder="Email" %}
+                        </div>
+                        <div class="col">
+                            {% render_field userregistrationform.confirm_email class="form-control" placeholder="Confirm email" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            {% render_field userregistrationform.username class="form-control" placeholder="Username" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            {% render_field userregistrationform.password class="form-control" placeholder="Password" %}
+                        </div>
+                        <div class="col">
+                            {% render_field userregistrationform.confirm_password class="form-control" placeholder="Confirm Password" %}
+                        </div>
+                    </div>
+                    <br>
+                    <div class="form-row">
+                        <div class="col">
+                            {{ userregistrationform.type_of_users.label }}
+                            {% render_field userregistrationform.type_of_users class="form-control" %}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">REGISTER</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

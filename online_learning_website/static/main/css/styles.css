@@ -1,0 +1,4 @@
+/*Disable horizontal scrolling of any webpage*/
+html, body {
+    max-width: 100%; overflow-x: hidden; 
+}
