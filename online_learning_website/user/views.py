@@ -17,7 +17,7 @@ def register(request):
                 addadditionalstudentdetails = AdditionalStudentDetail(user = user)
                 addadditionalstudentdetails.save()
             elif userregistrationform.cleaned_data['type_of_users'] == '2':
-                addadditionalinstructordetails = AdditionalInsructorDetail(user = user)
+                addadditionalinstructordetails = AdditionalInstructorDetail(user = user)
                 addadditionalinstructordetails.save()
             return redirect('login')
     else:

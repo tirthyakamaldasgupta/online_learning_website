@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'main',
     'user',
-    #'course',
+    'course',
     'widget_tweaks'
 ]
 
