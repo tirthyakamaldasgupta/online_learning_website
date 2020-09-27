@@ -1,0 +1,14 @@
+{% extends 'main/overall_base.html' %}
+{% load static %}
+{% block title %}{{ category.name }}{% endblock %}
+{% block body %}
+    <br>
+    <strong>{{ category.name }}</strong>
+    <ul> 
+        {% for subcategory in subcategories %}
+            <li>
+                <a href="{% url 'all_courses_preview' category.name|slugify subcategory.name|slugify %}">{{ subcategory.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

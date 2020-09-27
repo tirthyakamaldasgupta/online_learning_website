@@ -1,0 +1,14 @@
+{% extends 'main/overall_base.html' %}
+{% load static %}
+{% block title %}All categories{% endblock %}
+{% block body %}
+    <br>
+    <strong>All categories:</strong>
+    <ul>
+        {% for category in categories %}
+            <li>
+                <a href="{% url 'all_subcategories' category.name|slugify %}">{{ category.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
