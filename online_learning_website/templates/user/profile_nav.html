@@ -1,0 +1,6 @@
+<center>
+    {% if user.is_authenticated %}
+        <a href="{% url 'account' %}">Account</a>
+        <a href="{% url 'dashboard' %}">Dashboard</a>      
+    {% endif %}
+</center>

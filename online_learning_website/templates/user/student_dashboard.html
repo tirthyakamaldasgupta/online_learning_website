@@ -1,7 +1,8 @@
 {% extends 'main/overall_base.html' %}
 {% load static %}
-{% block title %}DASHBOARD{% endblock %}
+{% block title %}Dashboard{% endblock %}
 {% block body %}
 <br>
-    <h5>Hello, {{ user.first_name }}, this is your student dashboard.</h5>
+    <center><h5>Hello, {{ user.first_name }} {{ user.last_name }}, this is your student dashboard.</h5></center>
+    {% include 'user/profile_nav.html' %}
 {% endblock %}

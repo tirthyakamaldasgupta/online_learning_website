@@ -33,7 +33,7 @@ def login(request):
             user = auth.authenticate(username = username, password = password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('/')
+                return redirect('/user/profile')
             else:
                 messages.error(request, 'Wrong username or password provided!')
         else:
@@ -44,6 +44,16 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return redirect('/')
+
+def profile(request):
+    user = request.user
+    if user.is_authenticated:
+        return render(request, 'user/user_profile.html', {'user' : user})
+
+def account(request):
+    user = request.user
+    if user.is_authenticated:
+        return render(request, 'user/user_account.html', {'user' : user})
 
 def dashboard(request):
     user = request.user

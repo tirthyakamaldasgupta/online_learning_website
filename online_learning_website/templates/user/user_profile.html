@@ -1,0 +1,8 @@
+{% extends 'main/overall_base.html' %}
+{% load static %}
+{% block title %}Profile{% endblock %}
+{% block body %}
+<br>
+    <center><h5>Hello, {{ user.first_name }} {{ user.last_name }}, this is your profile.</h5></center>
+    {% include 'user/profile_nav.html' %}
+{% endblock %}
