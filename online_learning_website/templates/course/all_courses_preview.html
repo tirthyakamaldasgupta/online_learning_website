@@ -7,7 +7,7 @@
     <ul>
         {% for course in courses_by_subcategory %}
             <li>
-                <a href="{% url 'view_course' category_name|slugify subcategory_name|slugify course.name|slugify %}">{{ course.name }}</a>
+                <a href="{% url 'view_course' category_name|slugify subcategory_name|slugify course.name|slugify %}">{{ course.name }}</a> by {{ course.instructor_id.user.first_name }} {{ course.instructor_id.user.last_name }}
             </li>
         {% endfor %}
     </ul>
