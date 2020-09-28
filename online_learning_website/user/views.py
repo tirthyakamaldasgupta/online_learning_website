@@ -5,6 +5,7 @@ from .forms import UserRegisterForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import AdditionalStudentDetail, AdditionalInstructorDetail
+from course.models import Course, Enrollment
 
 def register(request):
     if request.method == "POST":
@@ -62,5 +63,28 @@ def dashboard(request):
             return render(request, 'user/student_dashboard.html', {'user' : user})
         elif hasattr(user, 'additionalinstructordetail') == True:
             return render(request, 'user/instructor_dashboard.html', {'user' : user})
+
+def courses_enrolled_in(request):
+    user = request.user
+    if user.is_authenticated:
+        if hasattr(user, 'additionalstudentdetail') == True:
+            enrollments = user.additionalstudentdetail.enrollment_set.all()
+            return render(request, 'user/courses_enrolled_in.html', {'enrollments' : enrollments})
+
+def enroll(request, category_name, subcategory_name, course_name, course_id):
+    user = request.user
+    if user.is_authenticated:
+        if hasattr(user, 'additionalstudentdetail') == True:
+            enrollment_count = Enrollment.objects.filter(student_id = user.additionalstudentdetail, course_id = Course.objects.get(id = course_id)).count()
+            if enrollment_count == 0:
+                new_enrollment = Enrollment(student_id = user.additionalstudentdetail, course_id = Course.objects.get(id = course_id))
+                new_enrollment.save()
+                return redirect('/user/profile/dashboard/enrollments')
+            else:
+                messages.error(request, 'You are already enrolled!')
+
+
+
+
     
 

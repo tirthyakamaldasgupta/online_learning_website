@@ -1,8 +1,9 @@
-{% extends 'main/overall_base.html' %}
+{% extends 'user/user_profile.html' %}
 {% load static %}
-{% block title %}Dashboard{% endblock %}
-{% block body %}
-<br>
-    <center><h5>Hello, {{ user.first_name }}  {{ user.last_name }}, this is your account.</h5></center>
-    {% include 'user/profile_nav.html' %}
+{% block title %}Account{% endblock %}
+{% block ac_and_dash %}
+    <hr style="width: 80%; height: 2px; background-color: red;">
+    <center>
+        <strong>Account details:</strong>
+    </center>
 {% endblock %}

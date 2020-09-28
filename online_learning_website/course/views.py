@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.utils.text import slugify
 from .models import Category, SubCategory, Course
+from user.views import AdditionalStudentDetail, Enrollment
 
 #For viewing the categories of courses.
 def all_categories(request):
@@ -21,5 +22,7 @@ def all_courses_preview(request, category_name, subcategory_name):
 
 #For viewing a particular course.
 def view_course(request, category_name, subcategory_name, course_name):
+    user = request.user
     course = Course.objects.get(slug = course_name)
-    return render(request, 'course/course.html', {'course' : course})
+    enrollment_count = Enrollment.objects.filter(student_id = user.additionalstudentdetail, course_id = course).count()
+    return render(request, 'course/course.html', {'category_name' : category_name, 'subcategory_name' : subcategory_name, 'course' : course, 'enrollment_count' : enrollment_count})

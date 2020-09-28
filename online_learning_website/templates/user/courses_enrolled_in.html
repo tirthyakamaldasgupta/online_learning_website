@@ -1,0 +1,13 @@
+{% extends 'user/student_dashboard.html' %}
+{% load static %}
+{% block title %}Courses you are enrolled in{% endblock %}
+{% block studentextras %}
+    <center>
+        <strong>Courses you are enrolled in:</h5></strong>
+        <ul>
+            {% for enrollment in enrollments %}
+                <li>{{ enrollment.course_id.name }} by {{ enrollment.course_id.instructor_id.user.first_name }} {{ enrollment.course_id.instructor_id.user.last_name }}</li>
+            {% endfor %}
+        </ul>
+        </center>
+{% endblock %}

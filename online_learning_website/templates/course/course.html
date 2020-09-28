@@ -2,5 +2,20 @@
 {% load static %}
 {% block title %}{{ course.name }}{% endblock %}
 {% block body %}
-    {{ course.name }}
+    <center>
+        <strong>Course: </strong>{{ course.name }}
+        <br>
+        <strong>Institute/Instructor: </strong>{{ course.instructor_id.user.first_name }} {{ course.instructor_id.user.last_name }}
+        <br><br>
+        {% if enrollment_count == 0 %}
+            <form action="{% url 'enroll' category_name|slugify subcategory_name|slugify course.name|slugify course.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary" name="enrollbtn" value="{{ course.id }}">Enroll</button>
+            </form>
+        {% else %}
+            <button type="button" class="btn btn-outline-primary" area-pressed="true">Enrolled &#10003</button>
+            <button type="submit" class="btn btn-primary" name="enrollbtn" value="{{ course.id }}">Go to course</button>
+
+        {% endif %} 
+    </center>
 {% endblock %}

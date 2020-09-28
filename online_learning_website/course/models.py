@@ -19,3 +19,8 @@ class Course(models.Model):
     subcategory_id = models.ForeignKey(SubCategory, null=False, on_delete=models.CASCADE)
     instructor_id = models.ForeignKey(AdditionalInstructorDetail, null=False, on_delete=models.CASCADE)
     slug = models.SlugField(null=False, max_length=255)
+
+class Enrollment(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    student_id = models.ForeignKey(AdditionalStudentDetail, null=False, on_delete=models.CASCADE)
+    course_id = models.ForeignKey(Course, null=False, on_delete=models.CASCADE)
