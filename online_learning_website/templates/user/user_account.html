@@ -1,9 +1,54 @@
 {% extends 'user/user_profile.html' %}
 {% load static %}
-{% block title %}Account{% endblock %}
+{% load widget_tweaks %}
+{% block title %}Dashboard{% endblock %}
 {% block ac_and_dash %}
     <hr style="width: 80%; height: 2px; background-color: red;">
     <center>
         <strong>Account details:</strong>
     </center>
+    <div>
+        <div class="row">
+            <div class="col-auto col-lg-6 col-xl-6 offset-lg-0 offset-xl-3 text-left text-dark">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissable">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-row">
+                        <div class="col">
+                            <label>First Name</label>
+                            {% render_field accountdetailsform.first_name class="form-control" value=user.first_name %}
+                        </div>
+                        <div class="col">
+                            <label>Last Name</label>
+                            {% render_field accountdetailsform.last_name class="form-control" value=user.last_name %}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Email</label>
+                            {% render_field accountdetailsform.email class="form-control" value=user.email %}
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <label>Username</label>
+                            {% render_field accountdetailsform.username class="form-control" value=user.username %}
+                        </div>
+                        <div class="col">
+                            <label>Password</label>
+                            {% render_field accountdetailsform.password class="form-control" placeholder="Not shown for security reasons." %}
+                        </div>
+                    </div>
+                    <br>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}

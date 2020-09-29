@@ -24,5 +24,8 @@ def all_courses_preview(request, category_name, subcategory_name):
 def view_course(request, category_name, subcategory_name, course_name):
     user = request.user
     course = Course.objects.get(slug = course_name)
-    enrollment_count = Enrollment.objects.filter(student_id = user.additionalstudentdetail, course_id = course).count()
-    return render(request, 'course/course.html', {'category_name' : category_name, 'subcategory_name' : subcategory_name, 'course' : course, 'enrollment_count' : enrollment_count})
+    if user.is_authenticated:
+        enrollment_count = Enrollment.objects.filter(student_id = user.additionalstudentdetail, course_id = course).count()
+        return render(request, 'course/course.html', {'category_name' : category_name, 'subcategory_name' : subcategory_name, 'course' : course, 'enrollment_count' : enrollment_count})
+    else:
+        return render(request, 'course/course.html', {'category_name' : category_name, 'subcategory_name' : subcategory_name, 'course' : course})

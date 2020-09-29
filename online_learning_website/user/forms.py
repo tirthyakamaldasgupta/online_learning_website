@@ -39,3 +39,10 @@ class UserRegisterForm(forms.Form):
     def save(self, commit = True):
         user = User.objects.create_user(first_name = self.cleaned_data['first_name'], last_name = self.cleaned_data['last_name'], email = self.cleaned_data['email'], username = self.cleaned_data['username'], password = self.cleaned_data['password'])
         return user
+
+class AccountDetailsForm(forms.Form):
+    first_name = forms.CharField()
+    last_name = forms.CharField()
+    email = forms.EmailField()
+    username = forms.CharField()
+    password = forms.CharField(widget=forms.PasswordInput)

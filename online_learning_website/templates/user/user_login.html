@@ -1,12 +1,19 @@
 {% extends 'main/overall_base.html' %}
 {% load static %}
 {% load widget_tweaks %}
-{% block title %}LOGIN{% endblock %}
+{% block title %}Login{% endblock %}
 {% block body %}
     <br>
     <div>
         <div class="row">
             <div class="col-auto col-lg-6 col-xl-6 offset-lg-0 offset-xl-3 text-left text-dark">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissable">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endif %}
                 <form method="POST">
                     {% csrf_token %}
                     <div class="form-row">
@@ -18,6 +25,7 @@
                         </div>
                     </div>
                     <br>
+                    <input type="hidden" name="next" value="{{ request.GET.next }}">
                     <button type="submit" class="btn btn-primary">LOGIN</button>
                 </form>
             </div>

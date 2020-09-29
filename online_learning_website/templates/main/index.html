@@ -1,3 +1,19 @@
 {% extends 'main/overall_base.html' %}
 {% load static %}
-{% block title %}LEARNNTRAIN{% endblock %}
+{% block title %}Learn&Train{% endblock %}
+{% block body %}
+    <div>
+        <div class="row">
+            <div class="col-auto col-lg-6 col-xl-6 offset-lg-0 offset-xl-3 text-left text-dark">
+                {% if messages %}
+                    {% for message in messages %}
+                        <div class="alert alert-success alert-dismissable">
+                            {{ message }}
+                            <button type="button" class="close" data-dismiss="alert">x</button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

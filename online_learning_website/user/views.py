@@ -1,7 +1,9 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.urls import reverse
 from django.shortcuts import render, redirect
 from django.contrib import sessions, messages, auth
-from .forms import UserRegisterForm
+from django.contrib.auth.decorators import login_required
+from .forms import UserRegisterForm, AccountDetailsForm
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import AuthenticationForm
 from .models import AdditionalStudentDetail, AdditionalInstructorDetail
@@ -17,9 +19,13 @@ def register(request):
             if userregistrationform.cleaned_data['type_of_users'] == '1':
                 addadditionalstudentdetails = AdditionalStudentDetail(user = user)
                 addadditionalstudentdetails.save()
+                reg_successful_message = 'Hello, ' + user.first_name + ' ' + user.last_name + ', thanks for choosing our platform to enhance your learning experience!'
+                messages.success(request, reg_successful_message)
             elif userregistrationform.cleaned_data['type_of_users'] == '2':
                 addadditionalinstructordetails = AdditionalInstructorDetail(user = user)
                 addadditionalinstructordetails.save()
+                reg_successful_message = 'Hello, ' + user.first_name + ' ' + user.last_name + ', great to have you onboard as an instructor!'
+                messages.success(request, reg_successful_message)
             return redirect('login')
     else:
         userregistrationform = UserRegisterForm()
@@ -31,10 +37,14 @@ def login(request):
         if userloginform.is_valid():
             username = userloginform.cleaned_data.get('username')
             password = userloginform.cleaned_data.get('password')
+            next = request.POST['next']
             user = auth.authenticate(username = username, password = password)
             if user is not None:
                 auth.login(request, user)
-                return redirect('/user/profile')
+                if next:
+                    return redirect(next)
+                else:
+                    return redirect('/user/profile')
             else:
                 messages.error(request, 'Wrong username or password provided!')
         else:
@@ -44,6 +54,8 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
+    logout_successful_message = 'You have logged out successfully!'
+    messages.success(request, logout_successful_message)
     return redirect('/')
 
 def profile(request):
@@ -53,8 +65,10 @@ def profile(request):
 
 def account(request):
     user = request.user
+    accountdetailsform = AccountDetailsForm()
     if user.is_authenticated:
-        return render(request, 'user/user_account.html', {'user' : user})
+        return render(request, 'user/user_account.html', {'user' : user, 'accountdetailsform' : accountdetailsform})
+    #return render(request, 'user/user_account.html')
 
 def dashboard(request):
     user = request.user
@@ -71,6 +85,7 @@ def courses_enrolled_in(request):
             enrollments = user.additionalstudentdetail.enrollment_set.all()
             return render(request, 'user/courses_enrolled_in.html', {'enrollments' : enrollments})
 
+@login_required
 def enroll(request, category_name, subcategory_name, course_name, course_id):
     user = request.user
     if user.is_authenticated:
@@ -82,9 +97,4 @@ def enroll(request, category_name, subcategory_name, course_name, course_id):
                 return redirect('/user/profile/dashboard/enrollments')
             else:
                 messages.error(request, 'You are already enrolled!')
-
-
-
-
-    
-
+                return HttpResponseRedirect(reverse('view_course', args=(category_name, subcategory_name, course_name)))          

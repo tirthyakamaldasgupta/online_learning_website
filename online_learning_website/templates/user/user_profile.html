@@ -6,7 +6,7 @@
     <center>
         <strong>Hello, {{ user.first_name }} {{ user.last_name }}, this is your profile.</strong>
         <hr style="width: 80%; height: 2px; background-color: red;">
-        {% include 'user/profile_nav.html' %}
     </center>
+    {% include 'user/profile_nav.html' %}
     {% block ac_and_dash %}{% endblock %}
 {% endblock %}
